@@ -1,0 +1,49 @@
+syntax="proto3";
+
+package auth;
+
+option go_package = "github.com/AleksandrVishniakov/dc-protos/gen/go/auth/v1;authv1";
+
+// Auth is a service for user authentication
+service Auth {
+  // Register registers a new user
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+
+  // Login logins an existing user
+  rpc Login(LoginRequest) returns (LoginResponse);
+
+  // Logout invalidates user's auth token
+  rpc Logout(LoginRequest) returns (LoginResponse);
+}
+
+// RegisterRequest sets for registering new user
+message RegisterRequest {
+  string login = 1; // Login of the user to register
+  string password = 2; // Password of the user to register
+}
+
+// RegisterResponse is returned on successful register request
+message RegisterResponse {
+  uint64 ID = 1; // ID of registered user
+}
+
+// LoginRequest sets for login an existing user
+message LoginRequest {
+  string login = 1; // Login of the user to login
+  string password = 2; // Password of the user to login
+}
+
+// LoginResponse is returned on successful login request
+message LoginResponse {
+  string token = 1; // Auth token of the logged in user
+}
+
+// LogoutRequest sets for login out an existing user
+message LogoutRequest {
+  string token = 1; // Auth token for invalidating
+}
+
+// LogoutResponse is returned on successful logout request
+message LogoutResponse {
+  bool ok = 1; // Indicates success of logout
+}
