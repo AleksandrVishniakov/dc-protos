@@ -11,9 +11,6 @@ service Auth {
 
   // Login logins an existing user
   rpc Login(LoginRequest) returns (LoginResponse);
-
-  // Logout invalidates user's auth token
-  rpc Logout(LoginRequest) returns (LoginResponse);
 }
 
 // RegisterRequest sets for registering new user
@@ -36,14 +33,4 @@ message LoginRequest {
 // LoginResponse is returned on successful login request
 message LoginResponse {
   string token = 1; // Auth token of the logged in user
-}
-
-// LogoutRequest sets for login out an existing user
-message LogoutRequest {
-  string token = 1; // Auth token for invalidating
-}
-
-// LogoutResponse is returned on successful logout request
-message LogoutResponse {
-  bool ok = 1; // Indicates success of logout
 }
