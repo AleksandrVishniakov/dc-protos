@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package auth;
+package daemon;
 
 option go_package = "github.com/AleksandrVishniakov/dc-protos/gen/go/daemon/v1;daemonv1";
 

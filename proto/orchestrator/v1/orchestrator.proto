@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package orchestrator;
+
+option go_package = "github.com/AleksandrVishniakov/dc-protos/gen/go/orchestrator/v1;orchestratorv1";
+
+// Orchestrator is a service for orchestrating daemons
+service Orchestrator {
+  rpc RegisterWorker(WorkerRegisterRequest) returns (WorkerRegisterResponse);
+  rpc StartTask(TaskStartingRequest) returns (TaskStartingResponse);
+  rpc SendTakResult(TaskResultRequest) returns (TaskResultResponse);
+}
+
+message WorkerRegisterRequest {
+  uint64 id = 1;
+  string url = 2;
+  uint32 executors = 3;
+}
+
+message WorkerRegisterResponse {
+  bool ok = 1;
+}
+
+message TaskStartingRequest {
+  uint64 id = 1;
+}
+
+message TaskStartingResponse {
+  bool ok = 1;
+}
+
+message TaskResultRequest {
+  uint64 id = 1;
+  float result = 2;
+}
+
+message TaskResultResponse {
+  bool ok = 1;
+}

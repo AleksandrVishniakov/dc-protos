@@ -35,7 +35,7 @@ func NewDaemonClient(cc grpc.ClientConnInterface) DaemonClient {
 
 func (c *daemonClient) CalculateTask(ctx context.Context, in *CalculationRequestDTO, opts ...grpc.CallOption) (*CalculationResponseDTO, error) {
 	out := new(CalculationResponseDTO)
-	err := c.cc.Invoke(ctx, "/auth.Daemon/CalculateTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/daemon.Daemon/CalculateTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func _Daemon_CalculateTask_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.Daemon/CalculateTask",
+		FullMethod: "/daemon.Daemon/CalculateTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DaemonServer).CalculateTask(ctx, req.(*CalculationRequestDTO))
@@ -92,7 +92,7 @@ func _Daemon_CalculateTask_Handler(srv interface{}, ctx context.Context, dec fun
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Daemon_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "auth.Daemon",
+	ServiceName: "daemon.Daemon",
 	HandlerType: (*DaemonServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
