@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "github.com/AleksandrVishniakov/dc-protos/gen/go/daemon/v1;daemonv1";
+
+// Daemon is a service for controlling a daemon
+service Daemon {
+  rpc CalculateTask(CalculationRequestDTO) returns (CalculationResponseDTO);
+}
+
+enum OperationType {
+  PLUS = 0;
+  MINUS = 1;
+  MULTIPLY = 2;
+  DIVIDE = 3;
+}
+
+message CalculationRequestDTO {
+  uint64 id = 1;
+  uint64 userID = 2;
+  float first = 3;
+  float second = 4;
+  OperationType operation = 5;
+  uint64 duration = 6;
+}
+
+message CalculationResponseDTO {
+  bool ok = 1;
+}
