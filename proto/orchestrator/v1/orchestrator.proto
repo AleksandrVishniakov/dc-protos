@@ -8,7 +8,7 @@ option go_package = "github.com/AleksandrVishniakov/dc-protos/gen/go/orchestrato
 service Orchestrator {
   rpc RegisterWorker(WorkerRegisterRequest) returns (WorkerRegisterResponse);
   rpc StartTask(TaskStartingRequest) returns (TaskStartingResponse);
-  rpc SendTakResult(TaskResultRequest) returns (TaskResultResponse);
+  rpc SendTaskResult(TaskResultRequest) returns (TaskResultResponse);
 }
 
 message WorkerRegisterRequest {

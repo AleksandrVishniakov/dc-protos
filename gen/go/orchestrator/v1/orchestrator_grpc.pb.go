@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type OrchestratorClient interface {
 	RegisterWorker(ctx context.Context, in *WorkerRegisterRequest, opts ...grpc.CallOption) (*WorkerRegisterResponse, error)
 	StartTask(ctx context.Context, in *TaskStartingRequest, opts ...grpc.CallOption) (*TaskStartingResponse, error)
-	SendTakResult(ctx context.Context, in *TaskResultRequest, opts ...grpc.CallOption) (*TaskResultResponse, error)
+	SendTaskResult(ctx context.Context, in *TaskResultRequest, opts ...grpc.CallOption) (*TaskResultResponse, error)
 }
 
 type orchestratorClient struct {
@@ -53,9 +53,9 @@ func (c *orchestratorClient) StartTask(ctx context.Context, in *TaskStartingRequ
 	return out, nil
 }
 
-func (c *orchestratorClient) SendTakResult(ctx context.Context, in *TaskResultRequest, opts ...grpc.CallOption) (*TaskResultResponse, error) {
+func (c *orchestratorClient) SendTaskResult(ctx context.Context, in *TaskResultRequest, opts ...grpc.CallOption) (*TaskResultResponse, error) {
 	out := new(TaskResultResponse)
-	err := c.cc.Invoke(ctx, "/orchestrator.Orchestrator/SendTakResult", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/orchestrator.Orchestrator/SendTaskResult", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (c *orchestratorClient) SendTakResult(ctx context.Context, in *TaskResultRe
 type OrchestratorServer interface {
 	RegisterWorker(context.Context, *WorkerRegisterRequest) (*WorkerRegisterResponse, error)
 	StartTask(context.Context, *TaskStartingRequest) (*TaskStartingResponse, error)
-	SendTakResult(context.Context, *TaskResultRequest) (*TaskResultResponse, error)
+	SendTaskResult(context.Context, *TaskResultRequest) (*TaskResultResponse, error)
 	mustEmbedUnimplementedOrchestratorServer()
 }
 
@@ -82,8 +82,8 @@ func (UnimplementedOrchestratorServer) RegisterWorker(context.Context, *WorkerRe
 func (UnimplementedOrchestratorServer) StartTask(context.Context, *TaskStartingRequest) (*TaskStartingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StartTask not implemented")
 }
-func (UnimplementedOrchestratorServer) SendTakResult(context.Context, *TaskResultRequest) (*TaskResultResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendTakResult not implemented")
+func (UnimplementedOrchestratorServer) SendTaskResult(context.Context, *TaskResultRequest) (*TaskResultResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendTaskResult not implemented")
 }
 func (UnimplementedOrchestratorServer) mustEmbedUnimplementedOrchestratorServer() {}
 
@@ -134,20 +134,20 @@ func _Orchestrator_StartTask_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Orchestrator_SendTakResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Orchestrator_SendTaskResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TaskResultRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrchestratorServer).SendTakResult(ctx, in)
+		return srv.(OrchestratorServer).SendTaskResult(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/orchestrator.Orchestrator/SendTakResult",
+		FullMethod: "/orchestrator.Orchestrator/SendTaskResult",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrchestratorServer).SendTakResult(ctx, req.(*TaskResultRequest))
+		return srv.(OrchestratorServer).SendTaskResult(ctx, req.(*TaskResultRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -168,8 +168,8 @@ var Orchestrator_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Orchestrator_StartTask_Handler,
 		},
 		{
-			MethodName: "SendTakResult",
-			Handler:    _Orchestrator_SendTakResult_Handler,
+			MethodName: "SendTaskResult",
+			Handler:    _Orchestrator_SendTaskResult_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
